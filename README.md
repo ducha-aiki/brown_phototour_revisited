@@ -1,4 +1,3 @@
-
 # brown_phototour_revisited
 > The package for local patch descriptors evaluation, which takes into account image indexes and second nearest neighbor ratio (SNN) filtering strategy. It is in agreement with IMC benchmark and practice, unlike the original protocol.
 
@@ -20,7 +19,7 @@ Here we will show how to evaluate several descriptors: Pytorch-based HardNet, Op
 
 
 
-```python
+```
 !pip install kornia
 ```
 
@@ -32,7 +31,7 @@ Here we will show how to evaluate several descriptors: Pytorch-based HardNet, Op
 
 The code below will download the HardNet, trained on Liberty dataset, download the Notredame subset and extracts the local patch descriptors into the dict. Note, that we should not evaluate descriptor on the same subset, as it was trained on.
 
-```python
+```
 import torch
 import kornia
 
@@ -59,7 +58,7 @@ desc_dict = extract_pytorchinput_descriptors(model,
     data/descriptors/HardNet+Liberty_32px_notredame.npy already exists, loading
 
 
-```python
+```
 print (desc_dict.keys())
 ```
 
@@ -70,7 +69,7 @@ Function **extract_pytorchinput_descriptors** expects **torch.nn.Module**, which
 
 Now we will calculate mAP.
 
-```python
+```
 mAP = evaluate_mAP_snn_based(desc_dict['descriptors'],
                              desc_dict['labels'], 
                              desc_dict['img_idxs'],
@@ -87,7 +86,7 @@ Now we will evaluate OpenCV SIFT descriptor.
 Function **extract_numpyinput_descriptors** expects function or object, which takes (patch_size, patch_size) input and outputs (desc_dim) np.array.
 As OpenCV doesn't provide such function, we will create it ourselves.
 
-```python
+```
 import cv2
 import numpy as np
 patch_size = 65
@@ -121,7 +120,7 @@ desc_dict_sift = extract_numpyinput_descriptors(extract_opencv_sift,
     data/descriptors/OpenCV_SIFT_65px_notredame.npy already exists, loading
 
 
-```python
+```
 mAP_SIFT = evaluate_mAP_snn_based(desc_dict_sift['descriptors'],
                              desc_dict_sift['labels'], 
                              desc_dict_sift['img_idxs'],
@@ -138,7 +137,7 @@ Now, let's try some binary descriptor, like BRIEF. Evaluation so far supports tw
 Function **extract_numpyinput_descriptors** expects function or object, which takes (patch_size, patch_size) input and outputs (desc_dim) np.array.
 As skimage doesn't provide exactly such function, we will create it ourselves by placing "detected" keypoint in the center of the patch.
 
-```python
+```
 import numpy as np
 from skimage.feature import BRIEF
 patch_size = 65
@@ -161,7 +160,7 @@ desc_dict_brief = extract_numpyinput_descriptors(extract_skimage_BRIEF,
 
 That's will take a while. 
 
-```python
+```
 mAP_BRIEF = evaluate_mAP_snn_based(desc_dict_brief['descriptors'].astype(np.bool),
                              desc_dict_brief['labels'], 
                              desc_dict_brief['img_idxs'],
@@ -180,7 +179,7 @@ For the handcrafted descriptors, or those, that are trained on 3rd party dataset
 
 We have function, which does all these evaluations: **full_evaluation**, which internally calls the functions we discussed above.
 
-```python
+```
 import torch
 import kornia
 from brown_phototour_revisited.benchmarking import *
