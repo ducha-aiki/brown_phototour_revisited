@@ -24,6 +24,12 @@ Here we will show how to evaluate several descriptors: Pytorch-based HardNet, Op
 !pip install kornia
 ```
 
+    Requirement already satisfied: kornia in /home/mishkdmy/.local/lib/python3.7/site-packages (0.4.1+0c9e625)
+    Requirement already satisfied: numpy in /home/mishkdmy/.conda/envs/fastai1/lib/python3.7/site-packages (from kornia) (1.18.0)
+    Requirement already satisfied: torch<1.7.0,>=1.6.0 in /home/mishkdmy/.local/lib/python3.7/site-packages (from kornia) (1.6.0)
+    Requirement already satisfied: future in /home/mishkdmy/.local/lib/python3.7/site-packages (from torch<1.7.0,>=1.6.0->kornia) (0.18.2)
+
+
 The code below will download the HardNet, trained on Liberty dataset, download the Notredame subset and extracts the local patch descriptors into the dict. Note, that we should not evaluate descriptor on the same subset, as it was trained on.
 
 ```python
@@ -49,9 +55,16 @@ desc_dict = extract_pytorchinput_descriptors(model,
                                 device = torch.device('cuda:0'))
 ```
 
+    # Found cached data data/dataset/notredame.pt
+    data/descriptors/HardNet+Liberty_32px_notredame.npy already exists, loading
+
+
 ```python
 print (desc_dict.keys())
 ```
+
+    dict_keys(['descriptors', 'labels', 'img_idxs'])
+
 
 Function **extract_pytorchinput_descriptors** expects **torch.nn.Module**, which takes (B, 1, patch_size, patch_size) torch.Tensor input and outputs (B, desc_dim) torch.Tensor.
 
@@ -65,6 +78,10 @@ mAP = evaluate_mAP_snn_based(desc_dict['descriptors'],
                             backend='pytorch-cuda')
 print (f'HardNetLib mAP on Notredame = {mAP:.5f}')
 ```
+
+    Found saved results data/mAP/HardNet+Liberty_notredame.npy, loading
+    HardNetLib mAP on Notredame = 0.61901
+
 
 Now we will evaluate OpenCV SIFT descriptor. 
 Function **extract_numpyinput_descriptors** expects function or object, which takes (patch_size, patch_size) input and outputs (desc_dim) np.array.
@@ -100,6 +117,10 @@ desc_dict_sift = extract_numpyinput_descriptors(extract_opencv_sift,
                                 patch_size = patch_size)
 ```
 
+    # Found cached data data/dataset/notredame.pt
+    data/descriptors/OpenCV_SIFT_65px_notredame.npy already exists, loading
+
+
 ```python
 mAP_SIFT = evaluate_mAP_snn_based(desc_dict_sift['descriptors'],
                              desc_dict_sift['labels'], 
@@ -108,6 +129,10 @@ mAP_SIFT = evaluate_mAP_snn_based(desc_dict_sift['descriptors'],
                             backend='pytorch-cuda')
 print (f'OpenCV SIFT PS = {patch_size}, mAP on Notredame = {mAP_SIFT:.5f}')
 ```
+
+    Found saved results data/mAP/OpenCV_SIFT65_notredame.npy, loading
+    OpenCV SIFT PS = 65, mAP on Notredame = 0.45530
+
 
 Now, let's try some binary descriptor, like BRIEF. Evaluation so far supports two metrics: **euclidean** and **hamming**.
 Function **extract_numpyinput_descriptors** expects function or object, which takes (patch_size, patch_size) input and outputs (desc_dim) np.array.
@@ -130,6 +155,10 @@ desc_dict_brief = extract_numpyinput_descriptors(extract_skimage_BRIEF,
                                 patch_size = patch_size)
 ```
 
+    # Found cached data data/dataset/notredame.pt
+    data/descriptors/skimage_BRIEF_65px_notredame.npy already exists, loading
+
+
 That's will take a while. 
 
 ```python
@@ -141,6 +170,10 @@ mAP_BRIEF = evaluate_mAP_snn_based(desc_dict_brief['descriptors'].astype(np.bool
                              distance='hamming')
 print (f'skimage BRIEF PS = {patch_size}, mAP on Notredame = {mAP_BRIEF:.5f}')
 ```
+
+    Found saved results data/mAP/skimageBRIEF_notredame.npy, loading
+    skimage BRIEF PS = 65, mAP on Notredame = 0.44817
+
 
 The original Brown benchmark consider evaluation, similar to cross-validation: train descriptor on one subset, evaluate on two others, repeat for all, so 6 evaluations are required. 
 For the handcrafted descriptors, or those, that are trained on 3rd party datasets, only 3 evaluations are necessary. 
@@ -168,6 +201,20 @@ desc_dict = full_evaluation(model,
                            distance='euclidean',
                            backend='pytorch-cuda')
 ```
+
+    # Found cached data data/dataset/liberty.pt
+    data/descriptors/Kornia RootSIFT_3rdparty_65px_liberty.npy already exists, loading
+    Found saved results data/mAP/Kornia RootSIFT_3rdparty_liberty.npy, loading
+    Kornia RootSIFT trained on 3rdparty PS = 65 mAP on liberty = 0.48087
+    # Found cached data data/dataset/notredame.pt
+    data/descriptors/Kornia RootSIFT_3rdparty_65px_notredame.npy already exists, loading
+    Found saved results data/mAP/Kornia RootSIFT_3rdparty_notredame.npy, loading
+    Kornia RootSIFT trained on 3rdparty PS = 65 mAP on notredame = 0.47713
+    # Found cached data data/dataset/yosemite.pt
+    data/descriptors/Kornia RootSIFT_3rdparty_65px_yosemite.npy already exists, loading
+    Found saved results data/mAP/Kornia RootSIFT_3rdparty_yosemite.npy, loading
+    Kornia RootSIFT trained on 3rdparty PS = 65 mAP on yosemite = 0.56700
+
 
 If you use the benchmark, please cite it:
 

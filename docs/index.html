@@ -82,6 +82,23 @@ To run the benchmark one needs two things:</p>
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Requirement already satisfied: kornia in /home/mishkdmy/.local/lib/python3.7/site-packages (0.4.1+0c9e625)
+Requirement already satisfied: numpy in /home/mishkdmy/.conda/envs/fastai1/lib/python3.7/site-packages (from kornia) (1.18.0)
+Requirement already satisfied: torch&lt;1.7.0,&gt;=1.6.0 in /home/mishkdmy/.local/lib/python3.7/site-packages (from kornia) (1.6.0)
+Requirement already satisfied: future in /home/mishkdmy/.local/lib/python3.7/site-packages (from torch&lt;1.7.0,&gt;=1.6.0-&gt;kornia) (0.18.2)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
     {% endraw %}
 
@@ -125,6 +142,21 @@ To run the benchmark one needs two things:</p>
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre># Found cached data data/dataset/notredame.pt
+data/descriptors/HardNet+Liberty_32px_notredame.npy already exists, loading
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
     {% endraw %}
 
@@ -139,6 +171,20 @@ To run the benchmark one needs two things:</p>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>dict_keys([&#39;descriptors&#39;, &#39;labels&#39;, &#39;img_idxs&#39;])
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -175,6 +221,21 @@ To run the benchmark one needs two things:</p>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Found saved results data/mAP/HardNet+Liberty_notredame.npy, loading
+HardNetLib mAP on Notredame = 0.61901
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -230,6 +291,21 @@ As OpenCV doesn't provide such function, we will create it ourselves.</p>
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre># Found cached data data/dataset/notredame.pt
+data/descriptors/OpenCV_SIFT_65px_notredame.npy already exists, loading
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
     {% endraw %}
 
@@ -249,6 +325,21 @@ As OpenCV doesn't provide such function, we will create it ourselves.</p>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Found saved results data/mAP/OpenCV_SIFT65_notredame.npy, loading
+OpenCV SIFT PS = 65, mAP on Notredame = 0.45530
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -291,6 +382,21 @@ As skimage doesn't provide exactly such function, we will create it ourselves by
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre># Found cached data data/dataset/notredame.pt
+data/descriptors/skimage_BRIEF_65px_notredame.npy already exists, loading
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
     {% endraw %}
 
@@ -318,6 +424,21 @@ As skimage doesn't provide exactly such function, we will create it ourselves by
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Found saved results data/mAP/skimageBRIEF_notredame.npy, loading
+skimage BRIEF PS = 65, mAP on Notredame = 0.44817
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -362,6 +483,31 @@ For the handcrafted descriptors, or those, that are trained on 3rd party dataset
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre># Found cached data data/dataset/liberty.pt
+data/descriptors/Kornia RootSIFT_3rdparty_65px_liberty.npy already exists, loading
+Found saved results data/mAP/Kornia RootSIFT_3rdparty_liberty.npy, loading
+Kornia RootSIFT trained on 3rdparty PS = 65 mAP on liberty = 0.48087
+# Found cached data data/dataset/notredame.pt
+data/descriptors/Kornia RootSIFT_3rdparty_65px_notredame.npy already exists, loading
+Found saved results data/mAP/Kornia RootSIFT_3rdparty_notredame.npy, loading
+Kornia RootSIFT trained on 3rdparty PS = 65 mAP on notredame = 0.47713
+# Found cached data data/dataset/yosemite.pt
+data/descriptors/Kornia RootSIFT_3rdparty_65px_yosemite.npy already exists, loading
+Found saved results data/mAP/Kornia RootSIFT_3rdparty_yosemite.npy, loading
+Kornia RootSIFT trained on 3rdparty PS = 65 mAP on yosemite = 0.56700
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
