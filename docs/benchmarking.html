@@ -95,6 +95,140 @@ denoting datasets, each model was trained on resp.</p>
 </div>
     {% endraw %}
 
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="nice_results_3rdparty" class="doc_header"><code>nice_results_3rdparty</code><a href="__main__.py#L3" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>nice_results_3rdparty</code>(<strong><code>desc_name</code></strong>:<code>str</code>, <strong><code>res_dict</code></strong>:<code>Dict</code>[<code>KT</code>, <code>VT</code>])</p>
+</blockquote>
+<p>Returns formatted string with results</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="nice_results_Brown" class="doc_header"><code>nice_results_Brown</code><a href="__main__.py#L21" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>nice_results_Brown</code>(<strong><code>desc_name</code></strong>:<code>str</code>, <strong><code>res_dict</code></strong>:<code>Dict</code>[<code>KT</code>, <code>VT</code>])</p>
+</blockquote>
+<p>Returns formatted string with results</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="print_results_table" class="doc_header"><code>print_results_table</code><a href="__main__.py#L59" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>print_results_table</code>(<strong><code>full_res_dict</code></strong>:<code>Dict</code>[<code>KT</code>, <code>VT</code>])</p>
+</blockquote>
+<p>Function, which prints nicely formatted table with all results</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Some visualization</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Kornia RootSIFT 32px&#39;</span><span class="p">:</span> 
+        <span class="p">{</span><span class="s1">&#39;3rdparty&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;liberty&#39;</span><span class="p">:</span> <span class="mf">0.49652328</span><span class="p">,</span>
+                      <span class="s1">&#39;notredame&#39;</span><span class="p">:</span> <span class="mf">0.49066364</span><span class="p">,</span>
+                      <span class="s1">&#39;yosemite&#39;</span><span class="p">:</span> <span class="mf">0.58237198</span><span class="p">}},</span>
+       <span class="s1">&#39;OpenCV_LATCH 65px&#39;</span><span class="p">:</span> 
+        <span class="p">{</span><span class="s1">&#39;yosemite&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;liberty&#39;</span><span class="p">:</span> <span class="mf">0.39075459</span><span class="p">,</span> 
+                      <span class="s1">&#39;notredame&#39;</span><span class="p">:</span> <span class="mf">0.37258606</span><span class="p">}}}</span>
+<span class="n">print_results_table</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Mean Average Precision wrt Lowe SNN ratio criterion on UBC Phototour Revisited
+------------------------------------------------------------------------------
+trained on       liberty notredame  liberty yosemite  notredame yosemite
+tested  on           yosemite           notredame            liberty
+------------------------------------------------------------------------------
+Kornia RootSIFT 32px   58.24              49.07               49.65 
+OpenCV_LATCH 65px  -----  -----        -----  37.26        -----  39.08
+------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
 </div>
  
 
