@@ -1,6 +1,6 @@
 
 # brown_phototour_revisited
-> The package for local patch descriptors evaluation, which takes into account image indexes and second nearest neighbor ratio (SNN) filtering strategy. It is in agreement with IMC benchmark and practice, unlike the original protocol. The benchmark is not "test benchmark" by amy means. Rather it is intended to be used as validation/development set for local patch descriptor learning and/or crafting.
+> The package for local patch descriptors evaluation, which takes into account image indexes  and second nearest neighbor ratio (SNN) filtering strategy. So, it evaluates descriptors in a similar way, how they are used in practice. It is in agreement with <a href='https://arxiv.org/abs/2003.01587'>IMC benchmark</a>, unlike the original protocol. The benchmark is not "test benchmark" by amy means. Rather it is intended to be used as validation/development set for local patch descriptor learning and/or crafting.
 
 
 ## Install
@@ -68,7 +68,56 @@ We have pre-computed some results for you. The implementation is in the followin
 - [Deep descriptors](examples/evaluate_deep_descriptors.ipynb)
 - [Non-deep descriptors](examples/evaluate_non_deep_descriptors.ipynb)
 
-The final table is the following:
+The final tables are the following:
+
+
+    ------------------------------------------------------------------------------
+    Mean Average Precision wrt Lowe SNN ratio criterion on UBC Phototour Revisited
+    ------------------------------------------------------------------------------
+    trained on       liberty notredame  liberty yosemite  notredame yosemite
+    tested  on           yosemite           notredame            liberty
+    ------------------------------------------------------------------------------
+    Kornia RootSIFT 32px   58.24              49.07               49.65 
+    HardNet 32px       70.64  70.31        61.93  59.56        63.06  61.64
+    SOSNet 32px        70.03  70.19        62.09  59.68        63.16  61.65
+    TFeat 32px         65.45  65.77        54.99  54.69        56.55  56.24
+    SoftMargin 32px    69.29  69.20        61.82  58.61        62.37  60.63
+    HardNetPS 32px         55.56              49.70               49.12 
+    R2D2_center_grayscal   61.47              53.18               54.98 
+    R2D2_MeanCenter_gray   62.73              54.10               56.17 
+    ------------------------------------------------------------------------------
+    
+    ------------------------------------------------------------------------------
+    Mean Average Precision wrt Lowe SNN ratio criterion on UBC Phototour Revisited
+    ------------------------------------------------------------------------------
+    trained on       liberty notredame  liberty yosemite  notredame yosemite
+    tested  on           yosemite           notredame            liberty
+    ------------------------------------------------------------------------------
+    Kornia RootSIFT 32px   58.24              49.07               49.65 
+    Kornia RootSIFT 41px   57.83              48.48               49.01 
+    Kornia SIFT 32px       58.47              47.76               48.70 
+    Kornia SIFT 41px       58.14              47.30               48.30 
+    OpenCV_SIFT 32px       53.16              45.93               46.00 
+    OpenCV_SIFT 41px       54.10              46.09               46.29 
+    OpenCV_RootSIFT 32px   53.50              47.16               47.37 
+    OpenCV_RootSIFT 41px   54.19              47.20               47.37 
+    OpenCV_LATCH 65px  -----  -----        -----  37.26        -----  39.08
+    OpenCV_LUCID 32px      20.37              23.08               27.24 
+    skimage_BRIEF 65px     52.68              44.82               46.56 
+    ------------------------------------------------------------------------------
+
+
+
+### Disclaimer 1: don't trust this table fully
+
+
+I haven't (yet!) checked if all the deep descriptors models, trained on Brown, were trained with flip-rotation 90 degrees augmentation. In the code below I assume that they were, however, it might not be true -- and the comparison might not be completely fair. I will do my best to check it, but if you know that I have used wrong weights - please open an issue. Thank you. 
+
+
+### Disclaimer 2: it is not "benchmark".
+
+
+The intended usage of the package is not to test and report the numbers in the paper. Instead think about is as cross-validation tool, helping the development. Thus, one CAN tune hyperparameters based on the benchmark results  instead of doing so on [HPatches](https://github.com/hpatches/hpatches-benchmark). After you have finished tuning, please, evaluate your local descriptors on some downstream task like [IMC image matching benchmark](https://github.com/vcg-uvic/image-matching-benchmark) or [visual localization](https://www.visuallocalization.net/).
 
 
 **If you found any mistake, please open an issue**
