@@ -1,4 +1,3 @@
-
 # brown_phototour_revisited
 > The package for local patch descriptors evaluation, which takes into account image indexes  and second nearest neighbor ratio (SNN) filtering strategy. So, it evaluates descriptors in a similar way, how they are used in practice. It is in agreement with <a href='https://arxiv.org/abs/2003.01587'>IMC benchmark</a>, unlike the original protocol. The benchmark is not "test benchmark" by amy means. Rather it is intended to be used as validation/development set for local patch descriptor learning and/or crafting.
 
@@ -14,7 +13,7 @@ There is a single function, which does everything for you: `full_evaluation`. Th
 However, if you need to run some tests separately, or reuse some functions -- we will cover the usage below.
 In the following example we will show how to use `full_evaluation` to evaluate SIFT descriptor as implemented in kornia.
 
-```python
+```
 # !pip install kornia
 ```
 
@@ -24,7 +23,7 @@ In the following example we will show how to use `full_evaluation` to evaluate S
     Requirement already satisfied: future in /home/mishkdmy/.local/lib/python3.7/site-packages (from torch<1.7.0,>=1.6.0->kornia) (0.18.2)
 
 
-```python
+```
 import torch
 import kornia
 from IPython.display import clear_output
@@ -134,7 +133,7 @@ Here we will show how to evaluate several descriptors: Pytorch-based HardNet, Op
 
 The code below will download the HardNet, trained on Liberty dataset, download the Notredame subset and extracts the local patch descriptors into the dict. Note, that we should not evaluate descriptor on the same subset, as it was trained on.
 
-```python
+```
 import torch
 import kornia
 
@@ -161,7 +160,7 @@ desc_dict = extract_pytorchinput_descriptors(model,
     data/descriptors/HardNet+Liberty_32px_notredame.npy already exists, loading
 
 
-```python
+```
 print (desc_dict.keys())
 ```
 
@@ -172,7 +171,7 @@ Function `extract_pytorchinput_descriptors` expects `torch.nn.Module`, which tak
 
 Now we will calculate mAP.
 
-```python
+```
 mAP = evaluate_mAP_snn_based(desc_dict['descriptors'],
                              desc_dict['labels'], 
                              desc_dict['img_idxs'],
@@ -190,7 +189,7 @@ Function `extract_numpyinput_descriptors` expects function or object, which take
 
 As OpenCV doesn't provide such function, we will create it ourselves, or rather take already implemented from [HPatches benchmark repo](https://github.com/hpatches/hpatches-benchmark/blob/master/python/extract_opencv_sift.py#L43)
 
-```python
+```
 import cv2
 import numpy as np
 patch_size = 65
@@ -228,26 +227,26 @@ desc_dict_sift = extract_numpyinput_descriptors(extract_opencv_sift,
 
 
 
-    <div>
-        <style>
-            /* Turns off some styling */
-            progress {
-                /* gets rid of default border in Firefox and Opera. */
-                border: none;
-                /* Needs to be in here for Safari polyfill so background images work as expected. */
-                background-size: auto;
-            }
-            .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
-                background: #F44336;
-            }
-        </style>
-      <progress value='468159' class='' max='468159' style='width:300px; height:20px; vertical-align: middle;'></progress>
-      100.00% [468159/468159 04:11<00:00]
-    </div>
-    
+<div>
+    <style>
+        /* Turns off some styling */
+        progress {
+            /* gets rid of default border in Firefox and Opera. */
+            border: none;
+            /* Needs to be in here for Safari polyfill so background images work as expected. */
+            background-size: auto;
+        }
+        .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+            background: #F44336;
+        }
+    </style>
+  <progress value='468159' class='' max='468159' style='width:300px; height:20px; vertical-align: middle;'></progress>
+  100.00% [468159/468159 04:11<00:00]
+</div>
 
 
-```python
+
+```
 mAP_SIFT = evaluate_mAP_snn_based(desc_dict_sift['descriptors'],
                              desc_dict_sift['labels'], 
                              desc_dict_sift['img_idxs'],
@@ -267,7 +266,7 @@ Function `extract_numpyinput_descriptors` expects function or object, which take
 
 As skimage doesn't provide exactly such function, we will create it ourselves by placing "detected" keypoint in the center of the patch.
 
-```python
+```
 import numpy as np
 from skimage.feature import BRIEF
 patch_size = 65
@@ -290,7 +289,7 @@ desc_dict_brief = extract_numpyinput_descriptors(extract_skimage_BRIEF,
 
 That's will take a while. 
 
-```python
+```
 mAP_BRIEF = evaluate_mAP_snn_based(desc_dict_brief['descriptors'].astype(np.bool),
                              desc_dict_brief['labels'], 
                              desc_dict_brief['img_idxs'],
