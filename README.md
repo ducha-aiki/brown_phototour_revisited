@@ -92,6 +92,7 @@ The final tables are the following:
     trained on       liberty notredame  liberty yosemite  notredame yosemite
     tested  on           yosemite           notredame            liberty
     ------------------------------------------------------------------------------
+    Kornia RootSIFTPCA  60.73  60.64        50.80  50.24        52.46  52.02
     Kornia RootSIFT 32px   58.24              49.07               49.65 
     Kornia RootSIFT 41px   57.83              48.48               49.01 
     Kornia SIFT 32px       58.47              47.76               48.70 
