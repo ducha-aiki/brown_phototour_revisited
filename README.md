@@ -2,6 +2,10 @@
 > The package for local patch descriptors evaluation, which takes into account image indexes  and second nearest neighbor ratio (SNN) filtering strategy. So, it evaluates descriptors in a similar way, how they are used in practice. It is in agreement with <a href='https://arxiv.org/abs/2003.01587'>IMC benchmark</a>, unlike the original protocol. The benchmark is not "test benchmark" by amy means. Rather it is intended to be used as validation/development set for local patch descriptor learning and/or crafting.
 
 
+# Why do I need brown_phototour_revisited?
+
+Why one might need this development set for learning local patch descriptors and what is wrong with existing ones -- see in this [blog post](https://ducha-aiki.github.io/wide-baseline-stereo-blog/2020/09/23/local-descriptors-validation.html)
+
 ## Install
 
 `pip install brown_phototour_revisited`
@@ -13,11 +17,11 @@ There is a single function, which does everything for you: `full_evaluation`. Th
 However, if you need to run some tests separately, or reuse some functions -- we will cover the usage below.
 In the following example we will show how to use `full_evaluation` to evaluate SIFT descriptor as implemented in kornia.
 
-```
+```python
 # !pip install kornia
 ```
 
-```
+```python
 import torch
 import kornia
 from IPython.display import clear_output
@@ -125,7 +129,7 @@ Here we will show how to evaluate several descriptors: Pytorch-based HardNet, Op
 
 The code below will download the HardNet, trained on Liberty dataset, download the Notredame subset and extracts the local patch descriptors into the dict. Note, that we should not evaluate descriptor on the same subset, as it was trained on.
 
-```
+```python
 import torch
 import kornia
 
@@ -152,7 +156,7 @@ desc_dict = extract_pytorchinput_descriptors(model,
     data/descriptors/HardNet+Liberty_32px_notredame.npy already exists, loading
 
 
-```
+```python
 print (desc_dict.keys())
 ```
 
@@ -163,7 +167,7 @@ Function `extract_pytorchinput_descriptors` expects `torch.nn.Module`, which tak
 
 Now we will calculate mAP.
 
-```
+```python
 mAP = evaluate_mAP_snn_based(desc_dict['descriptors'],
                              desc_dict['labels'], 
                              desc_dict['img_idxs'],
@@ -181,7 +185,7 @@ Function `extract_numpyinput_descriptors` expects function or object, which take
 
 As OpenCV doesn't provide such function, we will create it ourselves, or rather take already implemented from [HPatches benchmark repo](https://github.com/hpatches/hpatches-benchmark/blob/master/python/extract_opencv_sift.py#L43)
 
-```
+```python
 import cv2
 import numpy as np
 patch_size = 65
@@ -218,7 +222,7 @@ desc_dict_sift = extract_numpyinput_descriptors(extract_opencv_sift,
     data/descriptors/OpenCV_SIFT_65px_notredame.npy already exists, loading
 
 
-```
+```python
 mAP_SIFT = evaluate_mAP_snn_based(desc_dict_sift['descriptors'],
                              desc_dict_sift['labels'], 
                              desc_dict_sift['img_idxs'],
@@ -238,7 +242,7 @@ Function `extract_numpyinput_descriptors` expects function or object, which take
 
 As skimage doesn't provide exactly such function, we will create it ourselves by placing "detected" keypoint in the center of the patch.
 
-```
+```python
 import numpy as np
 from skimage.feature import BRIEF
 patch_size = 65
@@ -261,7 +265,7 @@ desc_dict_brief = extract_numpyinput_descriptors(extract_skimage_BRIEF,
 
 That's will take a while. 
 
-```
+```python
 mAP_BRIEF = evaluate_mAP_snn_based(desc_dict_brief['descriptors'].astype(np.bool),
                              desc_dict_brief['labels'], 
                              desc_dict_brief['img_idxs'],
@@ -279,7 +283,7 @@ print (f'skimage BRIEF PS = {patch_size}, mAP on Notredame = {mAP_BRIEF:.5f}')
 
 You can also directly load already calculated results from cache without creating a model by using function `load_cached_results`
 
-```
+```python
 from brown_phototour_revisited.benchmarking import load_cached_results
 desc_name = 'HardNet'
 patch_size = 32
