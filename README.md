@@ -17,12 +17,6 @@ In the following example we will show how to use `full_evaluation` to evaluate S
 # !pip install kornia
 ```
 
-    Requirement already satisfied: kornia in /home/mishkdmy/.local/lib/python3.7/site-packages (0.4.1+0c9e625)
-    Requirement already satisfied: numpy in /home/mishkdmy/.conda/envs/fastai1/lib/python3.7/site-packages (from kornia) (1.18.0)
-    Requirement already satisfied: torch<1.7.0,>=1.6.0 in /home/mishkdmy/.local/lib/python3.7/site-packages (from kornia) (1.6.0)
-    Requirement already satisfied: future in /home/mishkdmy/.local/lib/python3.7/site-packages (from torch<1.7.0,>=1.6.0->kornia) (0.18.2)
-
-
 ```
 import torch
 import kornia
@@ -92,18 +86,15 @@ The final tables are the following:
     trained on       liberty notredame  liberty yosemite  notredame yosemite
     tested  on           yosemite           notredame            liberty
     ------------------------------------------------------------------------------
-    Kornia RootSIFTPCA  60.73  60.64        50.80  50.24        52.46  52.02
-    Kornia RootSIFT 32px   58.24              49.07               49.65 
-    Kornia RootSIFT 41px   57.83              48.48               49.01 
     Kornia SIFT 32px       58.47              47.76               48.70 
-    Kornia SIFT 41px       58.14              47.30               48.30 
     OpenCV_SIFT 32px       53.16              45.93               46.00 
-    OpenCV_SIFT 41px       54.10              46.09               46.29 
+    Kornia RootSIFT 32px   58.24              49.07               49.65 
     OpenCV_RootSIFT 32px   53.50              47.16               47.37 
-    OpenCV_RootSIFT 41px   54.19              47.20               47.37 
     OpenCV_LATCH 65px  -----  -----        -----  37.26        -----  39.08
     OpenCV_LUCID 32px      20.37              23.08               27.24 
     skimage_BRIEF 65px     52.68              44.82               46.56 
+    Kornia RootSIFTPCA 3 60.73  60.64        50.80  50.24        52.46  52.02
+    MKD-concat-lw-32 32p 72.27  71.95        60.88  58.78        60.68  59.10
     ------------------------------------------------------------------------------
 
 
@@ -224,27 +215,7 @@ desc_dict_sift = extract_numpyinput_descriptors(extract_opencv_sift,
 ```
 
     # Found cached data data/dataset/notredame.pt
-
-
-
-
-<div>
-    <style>
-        /* Turns off some styling */
-        progress {
-            /* gets rid of default border in Firefox and Opera. */
-            border: none;
-            /* Needs to be in here for Safari polyfill so background images work as expected. */
-            background-size: auto;
-        }
-        .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
-            background: #F44336;
-        }
-    </style>
-  <progress value='468159' class='' max='468159' style='width:300px; height:20px; vertical-align: middle;'></progress>
-  100.00% [468159/468159 04:11<00:00]
-</div>
-
+    data/descriptors/OpenCV_SIFT_65px_notredame.npy already exists, loading
 
 
 ```
@@ -302,6 +273,37 @@ print (f'skimage BRIEF PS = {patch_size}, mAP on Notredame = {mAP_BRIEF:.5f}')
 
     Found saved results data/mAP/skimageBRIEF_notredame.npy, loading
     skimage BRIEF PS = 65, mAP on Notredame = 0.44817
+
+
+### Loading cached results
+
+You can also directly load already calculated results from cache without creating a model by using function `load_cached_results`
+
+```
+from brown_phototour_revisited.benchmarking import load_cached_results
+desc_name = 'HardNet'
+patch_size = 32
+desc_dict =  load_cached_results(desc_name,
+                    learned_on = ['liberty', 'notredame', 'yosemite'],
+                    path_to_save_dataset = download_dataset_to,
+                    path_to_save_descriptors = descs_out_dir,
+                    path_to_save_mAP = results_dir,
+                    patch_size = patch_size)
+
+results_dict[f'{desc_name} {patch_size}px'] = desc_dict
+clear_output()
+print_results_table(results_dict)
+```
+
+    ------------------------------------------------------------------------------
+    Mean Average Precision wrt Lowe SNN ratio criterion on UBC Phototour Revisited
+    ------------------------------------------------------------------------------
+    trained on       liberty notredame  liberty yosemite  notredame yosemite
+    tested  on           yosemite           notredame            liberty
+    ------------------------------------------------------------------------------
+    Kornia RootSIFT        56.70              47.71               48.09 
+    HardNet 32px       70.64  70.31        61.93  59.56        63.06  61.64
+    ------------------------------------------------------------------------------
 
 
 If you use the benchmark, please cite it:
